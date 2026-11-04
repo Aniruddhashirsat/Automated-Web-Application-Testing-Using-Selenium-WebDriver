@@ -1,0 +1,23 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Database files
+*.db
+*.sqlite3
+
+# Test artifacts
+.pytest_cache/
+reports/*.html
+reports/assets/
+screenshots/*.png
+
+# IDE configs
+.vscode/
+.idea/

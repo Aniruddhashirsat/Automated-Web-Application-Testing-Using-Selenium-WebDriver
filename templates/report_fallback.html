@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0 p-4">
+                <div class="fs-1 text-warning mb-3">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <h3 class="fw-bold text-dark mb-2">No Test Report Available Yet</h3>
+                <p class="text-secondary mb-4">
+                    The pytest automation test suite has not been executed yet in this session. Running the test suite will automatically generate <code>reports/report.html</code>.
+                </p>
+                <div class="bg-dark text-white text-start p-3 rounded font-monospace small mb-4">
+                    <div class="text-muted mb-1"># Command to execute tests and generate report:</div>
+                    <code>pytest tests/ --html=reports/report.html --self-contained-html</code>
+                </div>
+                <div>
+                    <a href="{{ url_for('main.project_home') }}" class="btn btn-primary">
+                        <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title if page_title else "STAQA Web Application Testing" }}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url_for('main.project_home') }}" id="nav-brand">
+                <i class="bi bi-shield-check text-warning me-2 fs-4"></i>
+                <span>STAQA QA Automation</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.project_home') }}" id="nav-home">
+                            <i class="bi bi-house-door me-1"></i>Project Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.view_latest_report') }}" id="nav-reports" target="_blank">
+                            <i class="bi bi-file-earmark-bar-graph me-1"></i>HTML Test Report
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    {% if session.get('user_id') %}
+                        <li class="nav-item me-2">
+                            <a class="nav-link" href="{{ url_for('main.dashboard') }}" id="nav-dashboard">
+                                <i class="bi bi-person-circle me-1"></i>
+                                <span id="nav-username">{{ session.get('user_name') }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger btn-sm" href="{{ url_for('main.logout') }}" id="nav-logout">
+                                <i class="bi bi-box-arrow-right me-1"></i>Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item me-2">
+                            <a class="nav-link" href="{{ url_for('main.login') }}" id="nav-login">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary btn-sm px-3" href="{{ url_for('main.register') }}" id="nav-register">
+                                <i class="bi bi-person-plus me-1"></i>Register
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Global Alert Messages -->
+    <div class="container mt-3" id="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show shadow-sm" role="alert" id="alert-{{ category }}">
+                        {% if category == 'success' %}
+                            <i class="bi bi-check-circle-fill me-2"></i>
+                        {% elif category == 'danger' or category == 'error' %}
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        {% elif category == 'warning' %}
+                            <i class="bi bi-exclamation-circle-fill me-2"></i>
+                        {% else %}
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                        {% endif %}
+                        <span class="alert-text">{{ message }}</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Page Content -->
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-top py-3 mt-5">
+        <div class="container text-center text-muted small">
+            <p class="mb-1">
+                <strong>SPPU Computer Engineering</strong> &bull; Software Testing & Quality Assurance (STAQA) Mini-Project
+            </p>
+            <p class="mb-0">
+                Automated Web Testing Suite with Selenium WebDriver &amp; PyTest &bull; Academic Year 2025&ndash;2026
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
